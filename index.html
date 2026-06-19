@@ -32,7 +32,7 @@
     --sans:"Spectral", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   }
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0; width:100%; max-width:100%; overflow-x:hidden; overscroll-behavior:none;}
+  html,body{margin:0;padding:0;}
   body{
     font-family:var(--serif);
     color:var(--sepia);
@@ -366,13 +366,10 @@
   (function(){
     var w = document.getElementById("welcome");
     if(!w) return;
-    var root = document.documentElement;
-    root.style.overflow = "hidden";              // lock scroll while the card is up
     var done = false;
     function go(){
       if(done) return; done = true;
       w.classList.add("dismissed");
-      root.style.overflow = "";
       setTimeout(function(){ w.style.display = "none"; }, 700);
     }
     document.getElementById("welcomeGo").addEventListener("click", function(e){ e.stopPropagation(); go(); });
@@ -586,6 +583,8 @@
     .on("mouseleave", hideTip)
     .on("click", (ev,d)=>{ ev.stopPropagation(); openLightbox(d.i); });
 
+  // generous invisible tap target so pins are easy to hit on a small phone screen
+  pins.append("circle").attr("class","hit").attr("r",16).attr("fill","transparent").style("pointer-events","all");
   pins.append("circle").attr("class","halo").attr("r",11);
   pins.append("circle").attr("class","dot").attr("r",MARKER_R);
   pins.append("circle").attr("class","ring").attr("r",MARKER_R+2.4);
