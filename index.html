@@ -32,7 +32,7 @@
     --sans:"Spectral", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   }
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
+  html,body{margin:0;padding:0; width:100%; max-width:100%; overflow-x:hidden; overscroll-behavior:none;}
   body{
     font-family:var(--serif);
     color:var(--sepia);
@@ -62,8 +62,8 @@
   #collage .mosaic{
     position:absolute; inset:-3%;
     display:grid; gap:0;
-    grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
-    grid-auto-rows:minmax(130px, 1fr);
+    grid-template-columns:repeat(auto-fill, minmax(112px,1fr));
+    grid-auto-rows:84px; /* 4:3-ish cells: far less crop on landscape photos */
     opacity:.5;
   }
   #collage .mosaic img{
@@ -76,7 +76,7 @@
     background:radial-gradient(120% 95% at 50% -10%,
       rgba(243,235,212,.50) 0%, rgba(231,217,182,.64) 55%, rgba(224,208,166,.74) 100%);
   }
-  @media(min-width:760px){ #collage .mosaic{ grid-template-columns:repeat(auto-fill, minmax(190px,1fr)); } }
+  @media(min-width:760px){ #collage .mosaic{ grid-template-columns:repeat(auto-fill, minmax(170px,1fr)); grid-auto-rows:128px; } }
 
   /* ---------- Welcome card (opaque, shows every load) ---------- */
   #welcome{
@@ -268,15 +268,15 @@
   .tl-item .y{ font-family:var(--display); font-weight:600; font-size:14px; color:var(--terracotta); display:block;}
   .tl-item .t{ font-family:var(--sans); font-weight:300; font-size:10px; color:var(--ink-soft); display:block; line-height:1.15; margin-top:2px;}
 
-  footer.legend{ text-align:center; margin-top:30px; font-family:var(--sans); font-weight:300; font-size:12px; color:var(--ink-soft);}
+  footer.legend{ text-align:center; margin-top:44px; font-family:var(--sans); font-weight:300; font-size:12px; color:var(--ink-soft);}
   .last-updated{
-    text-align:center; margin:34px 0 6px; font-family:var(--sans); font-weight:300;
+    text-align:center; margin:44px 0 6px; font-family:var(--sans); font-weight:300;
     font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); opacity:.75;
   }
   .replay{
     font-family:var(--sans); font-size:12px; letter-spacing:.08em; text-transform:uppercase;
     background:transparent; border:1px solid var(--rule); color:var(--sepia);
-    padding:7px 16px; border-radius:3px; cursor:pointer; margin-top:8px; transition:all .2s ease;
+    padding:7px 16px; border-radius:3px; cursor:pointer; margin-top:0; transition:all .2s ease;
   }
   .replay:hover{ background:var(--ochre); color:#2c2012; border-color:var(--ochre); }
 
@@ -391,9 +391,9 @@
     <p class="kicker">In the spirit of the Silk Road</p>
     <h1 class="title">The JACK <span class="road">Road</span></h1>
     <div class="subtitle">Jeff &middot; Amy &middot; Carly &middot; Kyra</div>
-    <p class="tagline">Twenty-two years, one family, from a Caribbean cruise to the gates of Istanbul.</p>
+    <p class="tagline">The Hu family's journey from Atlantis to the mosques of Istanbul.</p>
     <hr class="rule" />
-    <p class="intro">One unbroken road traced across the world &mdash; a single journey stitched together from every annual trip, 2003 to 2026. Follow the line as it draws itself, then tap any stop to open its photographs.</p>
+    <p class="intro">A virtual road traced across the world, mapping JACK's journey from every trip from 2003 through 2026. Follow the line and tap any stop to open a few snapshots into the trip.</p>
   </header>
 
   <div class="map-frame">
@@ -420,7 +420,6 @@
   <div class="timeline" id="timeline"></div>
 
   <footer class="legend">
-    <div>Hover a stop for its name &middot; tap a stop for photographs &middot; arrow keys move through a gallery</div>
     <button class="replay" id="replay">&#9654; Replay the road</button>
   </footer>
   <p class="last-updated">Last updated: June 18th @ 11:42 pm EDT</p>
