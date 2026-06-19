@@ -76,6 +76,76 @@
   }
   @media(min-width:760px){ #collage .mosaic{ grid-template-columns:repeat(auto-fill, minmax(190px,1fr)); } }
 
+  /* ---------- Welcome card (opaque, shows every load) ---------- */
+  #welcome{
+    position:fixed; inset:0; z-index:300;
+    display:flex; align-items:center; justify-content:center; padding:28px 22px;
+    background:radial-gradient(125% 95% at 50% 0%, #f4ecd6 0%, var(--parch-1) 52%, var(--parch-2) 100%);
+    box-shadow:inset 0 0 240px 80px rgba(86,60,28,.30);
+    cursor:pointer;
+    transition:opacity .65s ease, visibility .65s ease;
+  }
+  /* faint aged-paper grain on the card screen too */
+  #welcome::before{
+    content:""; position:absolute; inset:0; pointer-events:none; mix-blend-mode:multiply; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)' opacity='0.045'/%3E%3C/svg%3E");
+  }
+  #welcome.dismissed{ opacity:0; visibility:hidden; }
+  .welcome-card{
+    position:relative; max-width:660px; text-align:center; cursor:default;
+    animation:welcomeRise .9s cubic-bezier(.2,.8,.25,1) both;
+  }
+  @keyframes welcomeRise{ from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:none;} }
+  .w-quote{
+    font-family:var(--serif); font-style:italic; font-weight:400;
+    font-size:clamp(17px,3.6vw,25px); line-height:1.75; color:var(--sepia); margin:0 auto;
+  }
+  .w-attr{
+    font-family:var(--sans); font-weight:400; font-size:12px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--ink-soft); margin:12px 0 0;
+  }
+  .w-divider{
+    width:min(360px,70%); margin:26px auto; border:0; border-top:1.5px solid var(--rule); position:relative;
+  }
+  .w-divider::before{
+    content:"\2766"; position:absolute; top:-13px; left:50%; transform:translateX(-50%);
+    color:var(--ochre); font-size:20px; padding:0 12px;
+    background:radial-gradient(circle, var(--parch-1) 60%, transparent 70%);
+  }
+  .w-head{
+    font-family:var(--display); font-weight:700; color:var(--terracotta);
+    font-size:clamp(27px,6.4vw,46px); letter-spacing:.02em; margin:0 0 16px;
+    text-shadow:0 1px 0 #f5edd6;
+  }
+  .w-msg{
+    font-family:var(--serif); font-weight:400; font-size:clamp(16px,2.7vw,21px);
+    line-height:1.62; color:var(--sepia); max-width:540px; margin:0 auto;
+  }
+  .w-sig{
+    font-family:var(--serif); font-style:italic; font-size:clamp(16px,2.6vw,20px);
+    color:var(--teal); margin:20px 0 0;
+  }
+  .welcome-go{
+    margin-top:32px; width:66px; height:66px; border-radius:50%;
+    background:var(--terracotta); color:#f5edd6; border:1px solid var(--gold);
+    cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px -8px var(--shadow); -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation; transition:transform .15s ease, background .2s ease;
+    animation:goPulse 2.6s ease-in-out infinite;
+  }
+  .welcome-go svg{ width:30px; height:30px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .welcome-go:hover{ background:var(--ochre); color:#2c2012; transform:translateY(-2px); }
+  .welcome-go:active{ transform:scale(.93); }
+  .welcome-go:focus-visible{ outline:3px solid var(--gold); outline-offset:3px; }
+  @keyframes goPulse{ 0%,100%{ box-shadow:0 10px 24px -8px var(--shadow), 0 0 0 0 rgba(177,80,43,.4);} 60%{ box-shadow:0 10px 24px -8px var(--shadow), 0 0 0 14px rgba(177,80,43,0);} }
+  .w-hint{
+    font-family:var(--sans); font-weight:300; font-size:11px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-soft); margin:14px 0 0; opacity:.8;
+  }
+  @media(prefers-reduced-motion: reduce){
+    .welcome-card{ animation:none; } .welcome-go{ animation:none; }
+  }
+
   .wrap{position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:26px 18px 60px;}
 
   /* ---------- Title ---------- */
@@ -197,6 +267,10 @@
   .tl-item .t{ font-family:var(--sans); font-weight:300; font-size:10px; color:var(--ink-soft); display:block; line-height:1.15; margin-top:2px;}
 
   footer.legend{ text-align:center; margin-top:30px; font-family:var(--sans); font-weight:300; font-size:12px; color:var(--ink-soft);}
+  .last-updated{
+    text-align:center; margin:34px 0 6px; font-family:var(--sans); font-weight:300;
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); opacity:.75;
+  }
   .replay{
     font-family:var(--sans); font-size:12px; letter-spacing:.08em; text-transform:uppercase;
     background:transparent; border:1px solid var(--rule); color:var(--sepia);
@@ -271,6 +345,44 @@
 </style>
 </head>
 <body>
+<!-- Welcome card — appears on every load, opaque over the map -->
+<div id="welcome" role="dialog" aria-modal="true" aria-label="A note for Dad">
+  <div class="welcome-card">
+    <p class="w-quote">Two roads diverged in a wood, and I&mdash;<br>I took the one less traveled by,<br>And that has made all the difference.</p>
+    <p class="w-attr">&mdash; Robert Frost</p>
+    <hr class="w-divider" />
+    <h2 class="w-head">Happy Father's Day, Dad.</h2>
+    <p class="w-msg">I hope you enjoy this little silk-esque road of memories, in appreciation for all of the incredible places you've taken us over the years.</p>
+    <p class="w-sig">Love, Kyra</p>
+    <button id="welcomeGo" class="welcome-go" type="button" aria-label="Enter the map">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13"/><path d="M13 6l6 6-6 6"/></svg>
+    </button>
+    <p class="w-hint">Tap to begin</p>
+  </div>
+</div>
+<script>
+  (function(){
+    var w = document.getElementById("welcome");
+    if(!w) return;
+    var root = document.documentElement;
+    root.style.overflow = "hidden";              // lock scroll while the card is up
+    var done = false;
+    function go(){
+      if(done) return; done = true;
+      w.classList.add("dismissed");
+      root.style.overflow = "";
+      setTimeout(function(){ w.style.display = "none"; }, 700);
+    }
+    document.getElementById("welcomeGo").addEventListener("click", function(e){ e.stopPropagation(); go(); });
+    // tapping anywhere on the screen also continues (forgiving on a phone)
+    w.addEventListener("click", go);
+    document.addEventListener("keydown", function(e){
+      if(done) return;
+      if(e.key==="Enter" || e.key===" " || e.key==="Escape"){ e.preventDefault(); go(); }
+    });
+    window.addEventListener("load", function(){ try{ document.getElementById("welcomeGo").focus(); }catch(e){} });
+  })();
+</script>
 <div id="collage" aria-hidden="true"><div class="mosaic"></div><div class="wash"></div></div>
 <div class="wrap">
   <header class="masthead">
@@ -309,6 +421,7 @@
     <div>Hover a stop for its name &middot; tap a stop for photographs &middot; arrow keys move through a gallery</div>
     <button class="replay" id="replay">&#9654; Replay the road</button>
   </footer>
+  <p class="last-updated">Last updated: June 18th @ 11:42 pm EDT</p>
 </div>
 
 <div class="tooltip" id="tooltip"></div>
