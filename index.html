@@ -55,6 +55,27 @@
     position:fixed; inset:0; z-index:0; pointer-events:none;
     box-shadow:inset 0 0 220px 70px rgba(86,60,28,.30);
   }
+  /* photo-collage backdrop (one image per trip, sepia + dimmed, behind everything) */
+  #collage{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+  #collage .mosaic{
+    position:absolute; inset:-3%;
+    display:grid; gap:0;
+    grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
+    grid-auto-rows:minmax(130px, 1fr);
+    opacity:.5;
+  }
+  #collage .mosaic img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:sepia(.6) saturate(.8) contrast(.95) brightness(1.03);
+  }
+  /* warm parchment wash so photos stay faint and text stays readable */
+  #collage .wash{
+    position:absolute; inset:0;
+    background:radial-gradient(120% 95% at 50% -10%,
+      rgba(243,235,212,.50) 0%, rgba(231,217,182,.64) 55%, rgba(224,208,166,.74) 100%);
+  }
+  @media(min-width:760px){ #collage .mosaic{ grid-template-columns:repeat(auto-fill, minmax(190px,1fr)); } }
+
   .wrap{position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:26px 18px 60px;}
 
   /* ---------- Title ---------- */
@@ -250,6 +271,7 @@
 </style>
 </head>
 <body>
+<div id="collage" aria-hidden="true"><div class="mosaic"></div><div class="wash"></div></div>
 <div class="wrap">
   <header class="masthead">
     <p class="kicker">In the spirit of the Silk Road</p>
@@ -328,6 +350,27 @@
   let TRIPS = [];
   try { TRIPS = await fetch("manifest.json").then(r=>r.json()); }
   catch(e){ mapSvg.append("text").attr("x",W/2).attr("y",H/2).attr("text-anchor","middle").text("Could not load manifest.json"); return; }
+
+  // ---- build photo-collage backdrop: one representative photo per trip ----
+  (function buildCollage(){
+    const host = document.querySelector("#collage .mosaic");
+    if(!host) return;
+    let imgs = TRIPS.map(t => (t.photos && t.photos[0]) ? t.photos[0] : null).filter(Boolean);
+    if(imgs.length===0){ document.getElementById("collage").style.display="none"; return; }
+    // shuffle for an organic scrapbook feel
+    for(let i=imgs.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [imgs[i],imgs[j]]=[imgs[j],imgs[i]]; }
+    // tile enough to cover large screens; repeated URLs reuse the browser cache (no extra download)
+    const TILES = 60, frag = document.createDocumentFragment();
+    for(let i=0;i<TILES;i++){
+      const im = document.createElement("img");
+      im.src = imgs[i % imgs.length]; im.alt = "";
+      im.loading = i < imgs.length ? "eager" : "lazy";
+      im.decoding = "async";
+      im.onerror = () => im.remove();
+      frag.appendChild(im);
+    }
+    host.appendChild(frag);
+  })();
 
   // ---- load world atlas (try multiple CDNs; relative vendored copy first if present) ----
   async function loadAtlas(){
