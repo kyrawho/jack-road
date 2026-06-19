@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>The JACK Road</title>
+<meta name="description" content="Twenty-two years, one family, from a Caribbean cruise to the gates of Istanbul." />
+<!-- Old-map character serifs + clean sans, with graceful system fallbacks -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Spectral:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parch-0:#f0e6cc;      /* lightest paper */
+    --parch-1:#e7d9b6;      /* ocean / page */
+    --parch-2:#e0d0a6;      /* page edge */
+    --land:#d8c69b;         /* landmass fill */
+    --land-2:#cdb888;       /* landmass shade */
+    --ink:#5d4a30;          /* coastline ink */
+    --ink-soft:#8a7350;
+    --sepia:#6b4f2e;        /* route / labels */
+    --terracotta:#b1502b;
+    --ochre:#c8922b;
+    --teal:#2f6b67;
+    --gold:#b8893b;
+    --rule:#9a7f55;
+    --shadow:rgba(60,42,20,.28);
+    --display:"Cinzel", "Trajan Pro", Georgia, serif;
+    --serif:"EB Garamond", "Hoefler Text", Georgia, serif;
+    --sans:"Spectral", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--serif);
+    color:var(--sepia);
+    background:
+      radial-gradient(120% 90% at 50% -10%, #f3ebd4 0%, var(--parch-1) 45%, var(--parch-2) 100%);
+    background-attachment:fixed;
+    -webkit-text-size-adjust:100%;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  /* aged-paper grain overlay */
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;
+    opacity:.6;
+  }
+  /* vignette */
+  body::after{
+    content:"";
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    box-shadow:inset 0 0 220px 70px rgba(86,60,28,.30);
+  }
+  .wrap{position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:26px 18px 60px;}
+
+  /* ---------- Title ---------- */
+  header.masthead{ text-align:center; padding:14px 6px 6px; }
+  .kicker{
+    font-family:var(--sans); font-weight:400; letter-spacing:.34em;
+    text-transform:uppercase; font-size:11px; color:var(--ink-soft);
+    margin:0 0 12px;
+  }
+  h1.title{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(40px, 9vw, 88px); line-height:.98; margin:0;
+    color:var(--terracotta);
+    letter-spacing:.04em;
+    text-shadow:0 1px 0 #f5edd6, 0 2px 3px var(--shadow);
+  }
+  h1.title .road{ color:var(--sepia); }
+  .subtitle{
+    font-family:var(--serif); font-style:normal; font-weight:500;
+    font-size:clamp(15px,2.6vw,22px); letter-spacing:.16em;
+    margin:14px 0 2px; color:var(--teal); text-transform:uppercase;
+  }
+  .tagline{
+    font-family:var(--serif); font-style:italic; font-weight:400;
+    font-size:clamp(14px,2.3vw,19px); color:var(--sepia);
+    margin:8px auto 0; max-width:640px;
+  }
+  .rule{
+    width:min(560px,86%); height:0; margin:18px auto 6px; border:0;
+    border-top:1.5px solid var(--rule);
+    position:relative;
+  }
+  .rule::before{
+    content:"\2766"; position:absolute; top:-12px; left:50%; transform:translateX(-50%);
+    background:transparent; color:var(--ochre); font-size:20px; padding:0 10px;
+    text-shadow:0 0 6px var(--parch-1);
+  }
+  .intro{
+    font-family:var(--sans); font-weight:300; font-size:14px; line-height:1.6;
+    text-align:center; color:var(--ink-soft); max-width:600px; margin:6px auto 0;
+  }
+
+  /* ---------- Map ---------- */
+  .map-frame{
+    position:relative; margin:26px auto 0; max-width:1100px;
+    border:1px solid var(--rule);
+    box-shadow:0 0 0 6px rgba(154,127,85,.10), 0 18px 40px -18px var(--shadow);
+    background:linear-gradient(180deg, rgba(243,235,212,.5), rgba(224,208,166,.35));
+    border-radius:3px;
+  }
+  /* decorative inner border */
+  .map-frame .corner{position:absolute; width:22px; height:22px; border:1.5px solid var(--ochre); opacity:.65;}
+  .corner.tl{top:7px;left:7px;border-right:0;border-bottom:0;}
+  .corner.tr{top:7px;right:7px;border-left:0;border-bottom:0;}
+  .corner.bl{bottom:7px;left:7px;border-right:0;border-top:0;}
+  .corner.br{bottom:7px;right:7px;border-left:0;border-top:0;}
+
+  svg#map{ display:block; width:100%; height:auto; cursor:grab; touch-action:manipulation; }
+
+  .country{ fill:var(--land); stroke:var(--ink); stroke-width:.4; stroke-linejoin:round; }
+  .sphere{ fill:var(--parch-1); stroke:var(--ink-soft); stroke-width:.8; }
+  .graticule{ fill:none; stroke:#8a7350; stroke-width:.3; stroke-opacity:.35; stroke-dasharray:1 3;}
+
+  .route{
+    fill:none; stroke:var(--sepia); stroke-width:1.7;
+    stroke-linecap:round; stroke-dasharray:5 5;
+    filter:drop-shadow(0 1px 1px rgba(60,42,20,.25));
+    opacity:.85;
+  }
+  .route-glow{ fill:none; stroke:#7a5a34; stroke-width:4.5; opacity:.10; stroke-linecap:round;}
+
+  .pin{ cursor:pointer; }
+  .pin .halo{ fill:var(--ochre); opacity:0; }
+  .pin .dot{ fill:var(--terracotta); stroke:#f0e6cc; stroke-width:1; }
+  .pin .star{ fill:#f0e6cc; opacity:.92; }
+  .pin .ring{ fill:none; stroke:var(--gold); stroke-width:.9; opacity:.9;}
+  .pin.start .dot{ fill:var(--teal); }
+  .pin.end .dot{ fill:#7a2f1f; }
+  .pin .ylabel{
+    font-family:var(--serif); font-size:9.5px; fill:var(--sepia);
+    text-anchor:middle; paint-order:stroke; stroke:var(--parch-1); stroke-width:2.4px;
+    stroke-linejoin:round; opacity:.0;
+  }
+  .pin:hover .halo{ opacity:.5; }
+  .pin:hover .ylabel{ opacity:1; }
+  .pin:hover .dot{ fill:var(--ochre); }
+  .pin.pulse .halo{ animation:pulse 2.4s ease-out infinite; opacity:.4; }
+  @keyframes pulse{ 0%{transform:scale(.6);opacity:.5;} 70%{opacity:0;} 100%{transform:scale(2.6);opacity:0;} }
+
+  .tooltip{
+    position:fixed; z-index:50; pointer-events:none; opacity:0;
+    transform:translate(-50%,-130%); transition:opacity .12s ease;
+    background:#3c2c18; color:#f0e6cc; padding:5px 11px; border-radius:3px;
+    font-family:var(--serif); font-size:14px; white-space:nowrap;
+    box-shadow:0 6px 16px rgba(0,0,0,.35); border:1px solid #b8893b;
+  }
+  .tooltip .ty{ font-family:var(--display); font-weight:600; color:var(--ochre); margin-right:6px;}
+
+  /* compass rose decoration */
+  .compass{ position:absolute; right:16px; bottom:14px; width:74px; height:74px; opacity:.5; pointer-events:none;}
+  @media(max-width:620px){ .compass{ width:54px; height:54px; right:10px; bottom:10px;} }
+
+  /* ---------- Timeline scrubber ---------- */
+  .timeline{
+    margin:22px auto 0; max-width:1100px;
+    display:flex; gap:7px; overflow-x:auto; padding:8px 4px 12px;
+    scrollbar-width:thin; -webkit-overflow-scrolling:touch;
+  }
+  .timeline::-webkit-scrollbar{ height:6px; }
+  .timeline::-webkit-scrollbar-thumb{ background:var(--rule); border-radius:3px;}
+  .tl-item{
+    flex:0 0 auto; cursor:pointer; text-align:center; opacity:.45;
+    transition:opacity .3s ease, transform .15s ease; padding:4px 6px; border-radius:4px;
+    min-width:62px;
+  }
+  .tl-item.lit{ opacity:1; }
+  .tl-item:hover{ transform:translateY(-2px); background:rgba(184,137,59,.12); }
+  .tl-item .y{ font-family:var(--display); font-weight:600; font-size:14px; color:var(--terracotta); display:block;}
+  .tl-item .t{ font-family:var(--sans); font-weight:300; font-size:10px; color:var(--ink-soft); display:block; line-height:1.15; margin-top:2px;}
+
+  footer.legend{ text-align:center; margin-top:30px; font-family:var(--sans); font-weight:300; font-size:12px; color:var(--ink-soft);}
+  .replay{
+    font-family:var(--sans); font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+    background:transparent; border:1px solid var(--rule); color:var(--sepia);
+    padding:7px 16px; border-radius:3px; cursor:pointer; margin-top:8px; transition:all .2s ease;
+  }
+  .replay:hover{ background:var(--ochre); color:#2c2012; border-color:var(--ochre); }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{
+    position:fixed; inset:0; z-index:100; display:none;
+    background:rgba(34,24,12,.86); backdrop-filter:blur(3px);
+    align-items:center; justify-content:center; padding:18px;
+  }
+  .lightbox.open{ display:flex; }
+  .lb-panel{
+    position:relative; width:min(960px,100%); max-height:92vh;
+    background:
+      radial-gradient(140% 120% at 50% 0%, #f3ecd6, var(--parch-2));
+    border:1px solid var(--gold);
+    box-shadow:0 0 0 6px rgba(45,30,14,.5), 0 30px 60px -20px #000;
+    border-radius:4px; display:flex; flex-direction:column; overflow:hidden;
+    animation:rise .35s cubic-bezier(.2,.8,.25,1);
+  }
+  @keyframes rise{ from{ transform:translateY(18px) scale(.98); opacity:0;} to{ transform:none; opacity:1;} }
+  .lb-head{ padding:16px 54px 12px 22px; border-bottom:1px solid var(--rule); }
+  .lb-year{ font-family:var(--display); font-weight:700; font-size:clamp(22px,4vw,30px); color:var(--terracotta); letter-spacing:.03em;}
+  .lb-title{ font-family:var(--serif); font-size:clamp(16px,3vw,20px); color:var(--sepia); }
+  .lb-note{ font-family:var(--serif); font-style:italic; font-size:14px; color:var(--ink-soft); margin-top:2px; }
+  .lb-stage{
+    position:relative; flex:1 1 auto; min-height:0;
+    display:flex; align-items:center; justify-content:center;
+    background:repeating-linear-gradient(45deg,#e9dcbd,#e9dcbd 12px,#e5d6b3 12px,#e5d6b3 24px);
+    overflow:hidden;
+  }
+  .lb-stage img{
+    max-width:100%; max-height:62vh; display:block; object-fit:contain;
+    box-shadow:0 10px 30px -10px rgba(0,0,0,.5); border:4px solid #fbf6e6;
+    background:#fbf6e6;
+  }
+  .lb-empty{ font-family:var(--serif); font-style:italic; font-size:18px; color:var(--ink-soft); padding:60px 30px; text-align:center; }
+  .lb-arrow{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:3;
+    width:46px; height:46px; border-radius:50%; cursor:pointer;
+    background:rgba(60,44,24,.72); color:#f0e6cc; border:1px solid var(--gold);
+    font-size:22px; line-height:1; display:flex; align-items:center; justify-content:center;
+    transition:background .15s ease; user-select:none;
+  }
+  .lb-arrow:hover{ background:var(--terracotta); }
+  .lb-arrow.prev{ left:12px; } .lb-arrow.next{ right:12px; }
+  .lb-foot{
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    padding:10px 14px; border-top:1px solid var(--rule);
+    font-family:var(--sans); font-size:12px; color:var(--ink-soft); letter-spacing:.05em;
+  }
+  .lb-close{
+    position:absolute; top:10px; right:12px; z-index:5; cursor:pointer;
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--rule);
+    background:rgba(240,230,204,.8); color:var(--sepia); font-size:20px; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .lb-close:hover{ background:var(--terracotta); color:#f0e6cc; }
+  .dots{ display:flex; gap:6px; }
+  .dots i{ width:7px; height:7px; border-radius:50%; background:var(--rule); opacity:.5; display:block; cursor:pointer;}
+  .dots i.on{ background:var(--terracotta); opacity:1; }
+
+  .loading{ text-align:center; font-family:var(--serif); font-style:italic; color:var(--ink-soft); padding:40px;}
+  @media(max-width:620px){
+    .wrap{ padding:18px 10px 50px;}
+    .lb-head{ padding:14px 50px 10px 16px;}
+    .lb-stage img{ max-height:52vh;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <p class="kicker">In the spirit of the Silk Road</p>
+    <h1 class="title">The JACK <span class="road">Road</span></h1>
+    <div class="subtitle">Jeff &middot; Amy &middot; Carly &middot; Kyra</div>
+    <p class="tagline">Twenty-two years, one family, from a Caribbean cruise to the gates of Istanbul.</p>
+    <hr class="rule" />
+    <p class="intro">One unbroken road traced across the world &mdash; a single journey stitched together from every annual trip, 2003 to 2026. Follow the line as it draws itself, then tap any stop to open its photographs.</p>
+  </header>
+
+  <div class="map-frame">
+    <span class="corner tl"></span><span class="corner tr"></span>
+    <span class="corner bl"></span><span class="corner br"></span>
+    <svg id="map" role="img" aria-label="A stylized world map tracing the JACK Road journey"></svg>
+    <!-- compass rose -->
+    <svg class="compass" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#6b4f2e" stroke-width="1.3"/>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="#b8893b" stroke-width=".7"/>
+      <g fill="#b1502b" stroke="#6b4f2e" stroke-width=".5">
+        <polygon points="50,6 56,50 50,50"/><polygon points="50,6 44,50 50,50"/>
+      </g>
+      <g fill="#6b4f2e">
+        <polygon points="50,94 56,50 50,50"/><polygon points="50,94 44,50 50,50"/>
+        <polygon points="6,50 50,44 50,50"/><polygon points="94,50 50,44 50,50"/>
+        <polygon points="6,50 50,56 50,50"/><polygon points="94,50 50,56 50,50"/>
+      </g>
+      <circle cx="50" cy="50" r="3" fill="#c8922b" stroke="#6b4f2e" stroke-width=".5"/>
+      <text x="50" y="20" text-anchor="middle" font-size="9" font-family="Cinzel,serif" fill="#6b4f2e">N</text>
+    </svg>
+  </div>
+
+  <div class="timeline" id="timeline"></div>
+
+  <footer class="legend">
+    <div>Hover a stop for its name &middot; tap a stop for photographs &middot; arrow keys move through a gallery</div>
+    <button class="replay" id="replay">&#9654; Replay the road</button>
+  </footer>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
+  <div class="lb-panel" id="lbPanel">
+    <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+    <div class="lb-head">
+      <span class="lb-year" id="lbYear"></span>
+      <div class="lb-title" id="lbTitle"></div>
+      <div class="lb-note" id="lbNote"></div>
+    </div>
+    <div class="lb-stage" id="lbStage">
+      <div class="lb-arrow prev" id="lbPrev" aria-label="Previous">&#8249;</div>
+      <img id="lbImg" alt="" />
+      <div class="lb-empty" id="lbEmpty" style="display:none;">Photos coming soon.</div>
+      <div class="lb-arrow next" id="lbNext" aria-label="Next">&#8250;</div>
+    </div>
+    <div class="lb-foot">
+      <span id="lbCounter"></span>
+      <span class="dots" id="lbDots"></span>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+<script>
+(async function(){
+  const $ = (id)=>document.getElementById(id);
+  const mapSvg = d3.select("#map");
+
+  // ---- internal coordinate system (scales responsively via viewBox) ----
+  const W = 1000, H = 500;
+  mapSvg.attr("viewBox", `0 0 ${W} ${H}`).attr("preserveAspectRatio","xMidYMid meet");
+
+  // ---- load trip data ----
+  let TRIPS = [];
+  try { TRIPS = await fetch("manifest.json").then(r=>r.json()); }
+  catch(e){ mapSvg.append("text").attr("x",W/2).attr("y",H/2).attr("text-anchor","middle").text("Could not load manifest.json"); return; }
+
+  // ---- load world atlas (try multiple CDNs; relative vendored copy first if present) ----
+  async function loadAtlas(){
+    const urls = [
+      "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
+      "https://unpkg.com/world-atlas@2/countries-110m.json",
+      "https://cdn.skypack.dev/world-atlas@2/countries-110m.json"
+    ];
+    for(const u of urls){
+      try{ const r = await fetch(u); if(r.ok){ return await r.json(); } }catch(e){}
+    }
+    return null;
+  }
+  const world = await loadAtlas();
+
+  // ---- projection ----
+  const projection = d3.geoNaturalEarth1();
+  const path = d3.geoPath(projection);
+  projection.fitExtent([[8,8],[W-8,H-8]], {type:"Sphere"});
+
+  // sphere + graticule
+  mapSvg.append("path").attr("class","sphere").attr("d", path({type:"Sphere"}));
+  const graticule = d3.geoGraticule10();
+  mapSvg.append("path").attr("class","graticule").attr("d", path(graticule));
+
+  // countries
+  if(world){
+    const countries = topojson.feature(world, world.objects.countries).features;
+    mapSvg.append("g").selectAll("path.country")
+      .data(countries).join("path")
+      .attr("class","country").attr("d", path);
+  }
+
+  // layer groups (draw route under pins)
+  const routeLayer = mapSvg.append("g");
+  const pinLayer = mapSvg.append("g");
+
+  // ---- project stops + offset clustered pins ----
+  const stops = TRIPS.map((t,i)=>{
+    const [x,y] = projection([t.lng, t.lat]);
+    return {...t, i, lng0:t.lng, lat0:t.lat, x0:x, y0:y, x, y};
+  });
+
+  // Cluster detection: group any pins overlapping in degrees (~0.6deg heuristic)
+  // OR overlapping on screen given marker size, then fan them out radially so
+  // every stop stays individually visible & clickable. Route still follows
+  // strict chronological (array) order using the offset positions.
+  const MARKER_R = 5.2;
+  const DEG_THRESH = 0.6;          // requested degree heuristic
+  const PX_THRESH  = MARKER_R*2.0; // catches screen overlaps the degree test misses
+
+  // single-linkage clustering
+  const parent = stops.map((_,i)=>i);
+  const find = a => parent[a]===a ? a : (parent[a]=find(parent[a]));
+  const union = (a,b)=>{ parent[find(a)] = find(b); };
+  for(let a=0;a<stops.length;a++){
+    for(let b=a+1;b<stops.length;b++){
+      const dDeg = Math.hypot(stops[a].lat0-stops[b].lat0, stops[a].lng0-stops[b].lng0);
+      const dPx  = Math.hypot(stops[a].x0-stops[b].x0, stops[a].y0-stops[b].y0);
+      if(dDeg < DEG_THRESH || dPx < PX_THRESH) union(a,b);
+    }
+  }
+  const groups = {};
+  stops.forEach((s,i)=>{ const r=find(i); (groups[r]=groups[r]||[]).push(s); });
+  Object.values(groups).forEach(g=>{
+    if(g.length<2) return;
+    const cx = d3.mean(g,d=>d.x0), cy = d3.mean(g,d=>d.y0);
+    const radius = 9 + g.length*1.8;
+    g.forEach((s,k)=>{
+      const ang = (-Math.PI/2) + (k/g.length)*Math.PI*2; // start at top
+      s.x = cx + radius*Math.cos(ang);
+      s.y = cy + radius*Math.sin(ang);
+    });
+  });
+
+  // ---- the road: one continuous gently-curved arc through all stops ----
+  const line = d3.line().x(d=>d.x).y(d=>d.y).curve(d3.curveCatmullRom.alpha(0.5));
+  const routeD = line(stops);
+  routeLayer.append("path").attr("class","route-glow").attr("d", routeD);
+  const routePath = routeLayer.append("path").attr("class","route").attr("d", routeD);
+
+  const routeNode = routePath.node();
+  const L = routeNode.getTotalLength();
+
+  // sample the path to find each stop's arc-length position (for synced reveals)
+  const SAMPLES = 3000, sample = [];
+  for(let i=0;i<=SAMPLES;i++){ const len=L*i/SAMPLES; const p=routeNode.getPointAtLength(len); sample.push({len,x:p.x,y:p.y}); }
+  function lenForPoint(px,py){ let best=0,bd=Infinity; for(const s of sample){ const d=(s.x-px)**2+(s.y-py)**2; if(d<bd){bd=d;best=s.len;} } return best; }
+  stops.forEach(s=> s.lenAt = lenForPoint(s.x,s.y));
+
+  // ---- pins ----
+  const star = "M0,-6 L1.4,-1.4 L6,0 L1.4,1.4 L0,6 L-1.4,1.4 L-6,0 L-1.4,-1.4 Z";
+  const pins = pinLayer.selectAll("g.pin").data(stops).join("g")
+    .attr("class",(d,i)=> "pin" + (i===0?" start":"") + (i===stops.length-1?" end":""))
+    .attr("transform", d=>`translate(${d.x},${d.y})`)
+    .style("opacity",0)
+    .on("mouseenter", function(ev,d){ showTip(ev,d); })
+    .on("mousemove", function(ev,d){ moveTip(ev); })
+    .on("mouseleave", hideTip)
+    .on("click", (ev,d)=>{ ev.stopPropagation(); openLightbox(d.i); });
+
+  pins.append("circle").attr("class","halo").attr("r",11);
+  pins.append("circle").attr("class","dot").attr("r",MARKER_R);
+  pins.append("circle").attr("class","ring").attr("r",MARKER_R+2.4);
+  pins.append("path").attr("class","star").attr("d", star).attr("transform","scale(.62)");
+  pins.append("text").attr("class","ylabel").attr("y", MARKER_R+12).text(d=>d.year);
+
+  // ---- tooltip ----
+  const tip = $("tooltip");
+  function showTip(ev,d){ tip.innerHTML = `<span class="ty">${d.year}</span>${d.title}`; tip.style.opacity=1; moveTip(ev); }
+  function moveTip(ev){ tip.style.left = ev.clientX+"px"; tip.style.top = (ev.clientY-6)+"px"; }
+  function hideTip(){ tip.style.opacity=0; }
+
+  // ---- timeline scrubber ----
+  const tl = $("timeline");
+  stops.forEach((d,i)=>{
+    const el = document.createElement("div");
+    el.className="tl-item"; el.dataset.i=i;
+    el.innerHTML = `<span class="y">${d.year}</span><span class="t">${d.title}</span>`;
+    el.addEventListener("click",()=>openLightbox(i));
+    tl.appendChild(el);
+  });
+  const tlItems = Array.from(tl.children);
+
+  // ---- draw animation ----
+  let revealTimers = [];
+  function animateRoad(){
+    revealTimers.forEach(clearTimeout); revealTimers=[];
+    pins.style("opacity",0).classed("pulse",false);
+    tlItems.forEach(el=>el.classList.remove("lit"));
+    const DUR = Math.min(11000, 4200 + stops.length*320);
+    routePath.interrupt()
+      .attr("stroke-dasharray", `${L} ${L}`)
+      .attr("stroke-dashoffset", L)
+      .transition().duration(DUR).ease(d3.easeLinear)
+      .attr("stroke-dashoffset", 0)
+      .on("end", ()=> routePath.attr("stroke-dasharray","5 5").attr("stroke-dashoffset",null));
+    stops.forEach((s,i)=>{
+      const t = (s.lenAt/L)*DUR;
+      revealTimers.push(setTimeout(()=>{
+        d3.select(pins.nodes()[i]).transition().duration(420).ease(d3.easeBackOut.overshoot(2))
+          .style("opacity",1);
+        tlItems[i].classList.add("lit");
+        if(i===stops.length-1) d3.select(pins.nodes()[i]).classed("pulse",true);
+      }, t));
+    });
+  }
+  // respect reduced motion
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduce){
+    routePath.attr("stroke-dasharray","5 5");
+    pins.style("opacity",1); tlItems.forEach(el=>el.classList.add("lit"));
+    d3.select(pins.nodes()[stops.length-1]).classed("pulse",true);
+  } else {
+    animateRoad();
+  }
+  $("replay").addEventListener("click", animateRoad);
+
+  // ================= Lightbox =================
+  const lb=$("lightbox"), lbImg=$("lbImg"), lbEmpty=$("lbEmpty"),
+        lbYear=$("lbYear"), lbTitle=$("lbTitle"), lbNote=$("lbNote"),
+        lbCounter=$("lbCounter"), lbDots=$("lbDots");
+  let curStop=null, curIdx=0;
+
+  function preload(src){ if(!src) return; const im=new Image(); im.src=src; }
+
+  function render(){
+    const photos = curStop.photos||[];
+    if(photos.length===0){
+      lbImg.style.display="none"; lbEmpty.style.display="block";
+      $("lbPrev").style.display="none"; $("lbNext").style.display="none";
+      lbCounter.textContent=""; lbDots.innerHTML=""; return;
+    }
+    lbEmpty.style.display="none"; lbImg.style.display="block";
+    const multi = photos.length>1;
+    $("lbPrev").style.display = multi?"flex":"none";
+    $("lbNext").style.display = multi?"flex":"none";
+    lbImg.src = photos[curIdx];
+    lbImg.alt = `${curStop.title} — photo ${curIdx+1}`;
+    lbCounter.textContent = `${curIdx+1} / ${photos.length}`;
+    // lazy preload neighbours
+    preload(photos[(curIdx+1)%photos.length]);
+    preload(photos[(curIdx-1+photos.length)%photos.length]);
+    // dots
+    lbDots.innerHTML="";
+    if(multi && photos.length<=14){
+      photos.forEach((_,k)=>{ const d=document.createElement("i"); if(k===curIdx)d.classList.add("on");
+        d.addEventListener("click",()=>{curIdx=k;render();}); lbDots.appendChild(d); });
+    }
+  }
+  function openLightbox(i){
+    curStop = stops[i]; curIdx=0;
+    lbYear.textContent = curStop.year;
+    lbTitle.textContent = curStop.title;
+    lbNote.textContent = curStop.note || "";
+    lbNote.style.display = curStop.note ? "block":"none";
+    render();
+    lb.classList.add("open"); hideTip();
+    document.body.style.overflow="hidden";
+  }
+  function closeLightbox(){ lb.classList.remove("open"); lbImg.src=""; document.body.style.overflow=""; }
+  function next(){ const n=(curStop.photos||[]).length; if(n>1){ curIdx=(curIdx+1)%n; render(); } }
+  function prev(){ const n=(curStop.photos||[]).length; if(n>1){ curIdx=(curIdx-1+n)%n; render(); } }
+
+  $("lbNext").addEventListener("click", e=>{e.stopPropagation(); next();});
+  $("lbPrev").addEventListener("click", e=>{e.stopPropagation(); prev();});
+  $("lbClose").addEventListener("click", closeLightbox);
+  lb.addEventListener("click", e=>{ if(e.target===lb) closeLightbox(); });
+  $("lbPanel").addEventListener("click", e=>e.stopPropagation());
+  document.addEventListener("keydown", e=>{
+    if(!lb.classList.contains("open")) return;
+    if(e.key==="Escape") closeLightbox();
+    else if(e.key==="ArrowRight") next();
+    else if(e.key==="ArrowLeft") prev();
+  });
+  // swipe
+  let tx=0;
+  $("lbStage").addEventListener("touchstart", e=>{ tx=e.changedTouches[0].clientX; }, {passive:true});
+  $("lbStage").addEventListener("touchend", e=>{
+    const dx=e.changedTouches[0].clientX - tx;
+    if(Math.abs(dx)>45){ dx<0?next():prev(); }
+  }, {passive:true});
+
+  // hide tooltip when scrolling/leaving
+  window.addEventListener("scroll", hideTip, {passive:true});
+})();
+</script>
+</body>
+</html>

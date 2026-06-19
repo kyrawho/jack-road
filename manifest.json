@@ -1,0 +1,334 @@
+[
+  {
+    "year": 2003,
+    "title": "Bahamas Cruise",
+    "slug": "bahamas-cruise-2003",
+    "lat": 25.06,
+    "lng": -77.35,
+    "note": "where it began",
+    "photos": [
+      "photos/bahamas-cruise-2003/bahamas-cruise-2003-01.png",
+      "photos/bahamas-cruise-2003/bahamas-cruise-2003-02.png",
+      "photos/bahamas-cruise-2003/bahamas-cruise-2003-03.png",
+      "photos/bahamas-cruise-2003/bahamas-cruise-2003-04.png"
+    ]
+  },
+  {
+    "year": 2004,
+    "title": "Caribbean Cruise",
+    "slug": "caribbean-cruise-2004",
+    "lat": 24.0,
+    "lng": -78.5,
+    "note": "",
+    "photos": [
+      "photos/caribbean-cruise-2004/caribbean-cruise-2004-01.png",
+      "photos/caribbean-cruise-2004/caribbean-cruise-2004-02.png",
+      "photos/caribbean-cruise-2004/caribbean-cruise-2004-03.png",
+      "photos/caribbean-cruise-2004/caribbean-cruise-2004-04.png",
+      "photos/caribbean-cruise-2004/caribbean-cruise-2004-05.png",
+      "photos/caribbean-cruise-2004/caribbean-cruise-2004-06.png"
+    ]
+  },
+  {
+    "year": 2005,
+    "title": "Disney World",
+    "slug": "disney-world-2005",
+    "lat": 28.42,
+    "lng": -81.58,
+    "note": "Orlando",
+    "photos": [
+      "photos/disney-world-2005/disney-world-2005-01.png",
+      "photos/disney-world-2005/disney-world-2005-02.png",
+      "photos/disney-world-2005/disney-world-2005-03.png",
+      "photos/disney-world-2005/disney-world-2005-04.png",
+      "photos/disney-world-2005/disney-world-2005-05.png"
+    ]
+  },
+  {
+    "year": 2006,
+    "title": "Hershey Park",
+    "slug": "hershey-park-2006",
+    "lat": 40.28,
+    "lng": -76.65,
+    "note": "+ camping",
+    "photos": [
+      "photos/hershey-park-2006/hershey-park-2006-01.png"
+    ]
+  },
+  {
+    "year": 2008,
+    "title": "Washington DC & Williamsburg",
+    "slug": "dc-williamsburg-2008",
+    "lat": 38.9,
+    "lng": -77.04,
+    "note": "",
+    "photos": [
+      "photos/dc-williamsburg-2008/dc-williamsburg-2008-01.png",
+      "photos/dc-williamsburg-2008/dc-williamsburg-2008-02.png"
+    ]
+  },
+  {
+    "year": 2009,
+    "title": "California National Parks",
+    "slug": "california-parks-2009",
+    "lat": 37.87,
+    "lng": -119.54,
+    "note": "Sequoia, Yosemite & San Francisco",
+    "photos": [
+      "photos/california-parks-2009/california-parks-2009-01.png",
+      "photos/california-parks-2009/california-parks-2009-02.png",
+      "photos/california-parks-2009/california-parks-2009-03.png",
+      "photos/california-parks-2009/california-parks-2009-04.png",
+      "photos/california-parks-2009/california-parks-2009-05.png",
+      "photos/california-parks-2009/california-parks-2009-06.png",
+      "photos/california-parks-2009/california-parks-2009-07.png"
+    ]
+  },
+  {
+    "year": 2010,
+    "title": "Hawaii",
+    "slug": "hawaii-2010",
+    "lat": 21.31,
+    "lng": -157.86,
+    "note": "",
+    "photos": [
+      "photos/hawaii-2010/hawaii-2010-01.png",
+      "photos/hawaii-2010/hawaii-2010-02.png",
+      "photos/hawaii-2010/hawaii-2010-03.png",
+      "photos/hawaii-2010/hawaii-2010-04.png",
+      "photos/hawaii-2010/hawaii-2010-05.png",
+      "photos/hawaii-2010/hawaii-2010-06.png",
+      "photos/hawaii-2010/hawaii-2010-07.png",
+      "photos/hawaii-2010/hawaii-2010-08.png",
+      "photos/hawaii-2010/hawaii-2010-09.png"
+    ]
+  },
+  {
+    "year": 2011,
+    "title": "Yellowstone & Grand Teton",
+    "slug": "yellowstone-2011",
+    "lat": 44.43,
+    "lng": -110.59,
+    "note": "",
+    "photos": [
+      "photos/yellowstone-2011/yellowstone-2011-01.png",
+      "photos/yellowstone-2011/yellowstone-2011-02.png",
+      "photos/yellowstone-2011/yellowstone-2011-03.png",
+      "photos/yellowstone-2011/yellowstone-2011-04.png",
+      "photos/yellowstone-2011/yellowstone-2011-05.png",
+      "photos/yellowstone-2011/yellowstone-2011-06.png"
+    ]
+  },
+  {
+    "year": 2012,
+    "title": "Caribbean Cruise",
+    "slug": "caribbean-cruise-2012",
+    "lat": 25.5,
+    "lng": -77.0,
+    "note": "Bahamas",
+    "photos": [
+      "photos/caribbean-cruise-2012/caribbean-cruise-2012-01.png",
+      "photos/caribbean-cruise-2012/caribbean-cruise-2012-02.png",
+      "photos/caribbean-cruise-2012/caribbean-cruise-2012-03.png",
+      "photos/caribbean-cruise-2012/caribbean-cruise-2012-04.png"
+    ]
+  },
+  {
+    "year": 2012,
+    "title": "Italy",
+    "slug": "italy-2012",
+    "lat": 40.7,
+    "lng": 14.4,
+    "note": "Naples, Amalfi & Capri",
+    "photos": [
+      "photos/italy-2012/italy-2012-01.png",
+      "photos/italy-2012/italy-2012-02.png",
+      "photos/italy-2012/italy-2012-03.png",
+      "photos/italy-2012/italy-2012-04.png",
+      "photos/italy-2012/italy-2012-05.png",
+      "photos/italy-2012/italy-2012-06.png",
+      "photos/italy-2012/italy-2012-07.png",
+      "photos/italy-2012/italy-2012-08.png"
+    ]
+  },
+  {
+    "year": 2013,
+    "title": "Southern California",
+    "slug": "southern-california-2013",
+    "lat": 33.2,
+    "lng": -117.4,
+    "note": "San Diego & LA",
+    "photos": [
+      "photos/southern-california-2013/southern-california-2013-01.png",
+      "photos/southern-california-2013/southern-california-2013-02.png",
+      "photos/southern-california-2013/southern-california-2013-03.png",
+      "photos/southern-california-2013/southern-california-2013-04.png",
+      "photos/southern-california-2013/southern-california-2013-05.png"
+    ]
+  },
+  {
+    "year": 2014,
+    "title": "Spain & Portugal",
+    "slug": "spain-portugal-2014",
+    "lat": 40.0,
+    "lng": -4.5,
+    "note": "Lisbon & Barcelona",
+    "photos": [
+      "photos/spain-portugal-2014/spain-portugal-2014-01.png",
+      "photos/spain-portugal-2014/spain-portugal-2014-02.png",
+      "photos/spain-portugal-2014/spain-portugal-2014-03.png",
+      "photos/spain-portugal-2014/spain-portugal-2014-04.png"
+    ]
+  },
+  {
+    "year": 2015,
+    "title": "Southern Road Trip",
+    "slug": "southern-road-trip-2015",
+    "lat": 34.0,
+    "lng": -80.5,
+    "note": "NY to Georgia",
+    "photos": [
+      "photos/southern-road-trip-2015/southern-road-trip-2015-01.png",
+      "photos/southern-road-trip-2015/southern-road-trip-2015-02.png",
+      "photos/southern-road-trip-2015/southern-road-trip-2015-03.png",
+      "photos/southern-road-trip-2015/southern-road-trip-2015-04.png"
+    ]
+  },
+  {
+    "year": 2016,
+    "title": "Pacific Northwest",
+    "slug": "pacific-northwest-2016",
+    "lat": 47.61,
+    "lng": -122.33,
+    "note": "Seattle, Portland, Victoria & Vancouver",
+    "photos": [
+      "photos/pacific-northwest-2016/pacific-northwest-2016-01.png",
+      "photos/pacific-northwest-2016/pacific-northwest-2016-02.png",
+      "photos/pacific-northwest-2016/pacific-northwest-2016-03.png",
+      "photos/pacific-northwest-2016/pacific-northwest-2016-04.png",
+      "photos/pacific-northwest-2016/pacific-northwest-2016-05.png",
+      "photos/pacific-northwest-2016/pacific-northwest-2016-06.png"
+    ]
+  },
+  {
+    "year": 2017,
+    "title": "Japan",
+    "slug": "japan-2017",
+    "lat": 35.3,
+    "lng": 137.7,
+    "note": "Tokyo & Kyoto",
+    "photos": [
+      "photos/japan-2017/japan-2017-01.png",
+      "photos/japan-2017/japan-2017-02.png",
+      "photos/japan-2017/japan-2017-03.png"
+    ]
+  },
+  {
+    "year": 2018,
+    "title": "Germany",
+    "slug": "germany-2018",
+    "lat": 50.3,
+    "lng": 12.5,
+    "note": "Berlin & Munich",
+    "photos": [
+      "photos/germany-2018/germany-2018-01.png",
+      "photos/germany-2018/germany-2018-02.png",
+      "photos/germany-2018/germany-2018-03.png",
+      "photos/germany-2018/germany-2018-04.png"
+    ]
+  },
+  {
+    "year": 2019,
+    "title": "Maritime Cruise",
+    "slug": "maritime-cruise-2019",
+    "lat": 44.65,
+    "lng": -65.5,
+    "note": "Bar Harbor, Saint John & Halifax",
+    "photos": [
+      "photos/maritime-cruise-2019/maritime-cruise-2019-01.png",
+      "photos/maritime-cruise-2019/maritime-cruise-2019-02.png",
+      "photos/maritime-cruise-2019/maritime-cruise-2019-03.png",
+      "photos/maritime-cruise-2019/maritime-cruise-2019-04.png",
+      "photos/maritime-cruise-2019/maritime-cruise-2019-05.png"
+    ]
+  },
+  {
+    "year": 2022,
+    "title": "Spain",
+    "slug": "spain-2022",
+    "lat": 39.5,
+    "lng": -3.7,
+    "note": "Madrid, Granada & Seville",
+    "photos": [
+      "photos/spain-2022/spain-2022-01.png",
+      "photos/spain-2022/spain-2022-02.png",
+      "photos/spain-2022/spain-2022-03.png",
+      "photos/spain-2022/spain-2022-04.png",
+      "photos/spain-2022/spain-2022-05.png",
+      "photos/spain-2022/spain-2022-06.png",
+      "photos/spain-2022/spain-2022-07.png"
+    ]
+  },
+  {
+    "year": 2023,
+    "title": "Montreal",
+    "slug": "montreal-2023",
+    "lat": 45.5,
+    "lng": -73.57,
+    "note": "",
+    "photos": [
+      "photos/montreal-2023/montreal-2023-01.png",
+      "photos/montreal-2023/montreal-2023-02.png",
+      "photos/montreal-2023/montreal-2023-03.png"
+    ]
+  },
+  {
+    "year": 2023,
+    "title": "Washington DC",
+    "slug": "washington-dc-2023",
+    "lat": 38.91,
+    "lng": -77.05,
+    "note": "",
+    "photos": [
+      "photos/washington-dc-2023/washington-dc-2023-01.png",
+      "photos/washington-dc-2023/washington-dc-2023-02.png",
+      "photos/washington-dc-2023/washington-dc-2023-03.png",
+      "photos/washington-dc-2023/washington-dc-2023-04.png"
+    ]
+  },
+  {
+    "year": 2025,
+    "title": "Vienna",
+    "slug": "vienna-2025",
+    "lat": 48.21,
+    "lng": 16.37,
+    "note": "",
+    "photos": [
+      "photos/vienna-2025/vienna-2025-01.png",
+      "photos/vienna-2025/vienna-2025-02.png",
+      "photos/vienna-2025/vienna-2025-03.png",
+      "photos/vienna-2025/vienna-2025-04.png",
+      "photos/vienna-2025/vienna-2025-05.png",
+      "photos/vienna-2025/vienna-2025-06.png",
+      "photos/vienna-2025/vienna-2025-07.png",
+      "photos/vienna-2025/vienna-2025-08.png"
+    ]
+  },
+  {
+    "year": 2026,
+    "title": "Istanbul",
+    "slug": "istanbul-2026",
+    "lat": 41.01,
+    "lng": 28.98,
+    "note": "the end of the road",
+    "photos": [
+      "photos/istanbul-2026/istanbul-2026-01.png",
+      "photos/istanbul-2026/istanbul-2026-02.png",
+      "photos/istanbul-2026/istanbul-2026-03.png",
+      "photos/istanbul-2026/istanbul-2026-04.png",
+      "photos/istanbul-2026/istanbul-2026-05.png",
+      "photos/istanbul-2026/istanbul-2026-06.png",
+      "photos/istanbul-2026/istanbul-2026-07.png"
+    ]
+  }
+]
